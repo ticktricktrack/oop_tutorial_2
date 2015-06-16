@@ -6,7 +6,8 @@ class Database
   end
 
   def all(model)
-    db.get(model) || []
+    results = db.get(model) || []
+    results.map { |o| klass(model).new(o) }
   end
 
   def find(model, attribute, query )
@@ -31,7 +32,7 @@ class Database
 
 end
 
-module UseDatabase
+module Persistence
   module ClassMethods
     def all
       DB.all(name)
@@ -41,13 +42,21 @@ module UseDatabase
 
     end
   end
-  
+
   module InstanceMethods
     def save
-      DB.store(self.class.name, self)
+      DB.store(self.class.name, self.to_hash)
+    end
+
+    def to_hash
+      Hash[keys.map { |k| [k, instance_variable_get("@" + k.to_s)] } ]
+    end
+
+    def keys
+      self.class::ATTRS
     end
   end
-  
+
   def self.included(receiver)
     receiver.extend         ClassMethods
     receiver.send :include, InstanceMethods

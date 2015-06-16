@@ -1,13 +1,10 @@
-Car = Struct.new(:make, :model) do
-  def save
-    DB.store(:car, self)
-  end
+class Car
+  include Persistence
 
-  def self.all
-    DB.all(:car)
-  end
+  ATTRS = [:make, :model]
+  attr_accessor *ATTRS
 
-  def self.find(search_string)
-    DB.find(:car, "model", search_string)
+  def initialize(args = {})
+    args.each { |k,v| instance_variable_set("@#{k}", v) }
   end
 end
