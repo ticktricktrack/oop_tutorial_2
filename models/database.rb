@@ -15,7 +15,9 @@ class Database
   # end
 
   def store(model, object)
-    with_new = all(model).push(object).uniq.map(&:to_hash)
+    with_new = all(model).reject { |o| o.name == object.name }
+
+    with_new = with_new.push(object).uniq.map(&:to_hash)
     db.set(model, with_new)
     db.merge
     db.push
@@ -49,9 +51,13 @@ module Persistence
       args.each { |k,v| instance_variable_set("@#{k}", v) }
     end
 
-
     def save
       DB.store(self.class.name, self)
+    end
+
+    def create
+      save
+      return self
     end
 
     def to_hash

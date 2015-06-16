@@ -7,12 +7,12 @@ class Hacker
 
   def hack2
     User.new(name: "Rainer", balance: 1000000).save
-    skull if database_includes("1000000") and return
+    skull and return if database_includes("1000000")
     access_denied
   end
 
   def hack3
-    skull if database_includes("Tom") and return
+    skull and return if database_includes("Tom")
     access_denied
   end
 

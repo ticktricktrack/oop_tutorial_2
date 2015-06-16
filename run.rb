@@ -2,15 +2,18 @@ require_relative "boot"
 require_relative "hacker"
 
 class Bank
-  @var1 = 1
+  @password = "qwerty"
   @var2 = 2
   @var3 = 3
 
   def run_transactions
     DB.clear
-    Car.new(make: "Porsche", model: "911").save
-    Car.new(make: "Nissan", model: "Skyline").save
-    puts ap Car.all
+    tom = User.new(name: "Tom", balance: 0, password: "qwerty").create
+    rainer = User.new(name: "Rainer", balance: 0, password: "qwerty").create
+    tom.deposit(10)
+    rainer.deposit(25)
+    puts ap User.all
+    # binding.pry
   end
 end
 Bank.new.run_transactions
@@ -24,9 +27,9 @@ Hacker.new.hack1
 ### The bank can put money into a users account
 
 ## 2: A Hacker appears
-# Hacker.new.hack2
+Hacker.new.hack2
 ### Protect the user interface
-
+puts ap User.all
 ## Step 3
 
 ### The bank can take money out of a users account
@@ -37,7 +40,7 @@ Hacker.new.hack1
 ### Store a Transaction History
 
 ## 5: A hacker appears
- Hacker.new.hack3
+ # Hacker.new.hack3
 ### Encrypt the database
 # https://github.com/mdp/gibberish
 
