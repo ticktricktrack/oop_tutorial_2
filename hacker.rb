@@ -1,12 +1,33 @@
 require_relative "boot"
 
 class Hacker
-  def hack
-    puts "all is well"
+  def hack1
+    puts access_denied
+  end
+
+  def hack2
+    User.new(name: "Rainer", balance: 1000000).save
+    skull if database_includes("1000000") and return
+    access_denied
+  end
+
+  def hack3
+    skull if database_includes("Tom") and return
+    access_denied
+  end
+
+  def database_includes(string)
+    db = JsonStore.new("db.json")
+    db.pull
+    db.get("User").to_s.scan(string).present?
+  end
+
+  def access_denied
+    puts "ACCESS DENIED!"
   end
 
   def skull
-    skull = <<-FOO
+    puts skull = <<-FOO
                      .ed"""" """$$$$be.
                    -"           ^""**$$$e.
                  ."                   '$$$c

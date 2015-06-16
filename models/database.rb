@@ -10,12 +10,12 @@ class Database
     results.map { |o| klass(model).new(o) }
   end
 
-  def find(model, attribute, query )
-    all(model).detect{ |o| o[attribute] == query }
-  end
+  # def find(model, attribute, query )
+    # all(model).detect{ |o| o[attribute] == query }
+  # end
 
   def store(model, object)
-    with_new = all(model).push(object).uniq
+    with_new = all(model).push(object).uniq.map(&:to_hash)
     db.set(model, with_new)
     db.merge
     db.push
@@ -51,7 +51,7 @@ module Persistence
 
 
     def save
-      DB.store(self.class.name, self.to_hash)
+      DB.store(self.class.name, self)
     end
 
     def to_hash
