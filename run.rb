@@ -1,8 +1,43 @@
 require_relative "boot"
+require_relative "hacker"
 
-DB.clear
+class Bank
+  @var1 = 1
+  @var2 = 2
+  @var3 = 3
 
-Car.new(make: "Porsche", model: "911").save
+  def run_transactions
+    DB.clear
+    Car.new(make: "Porsche", model: "911").save
+    puts ap Car.all
+  end
+end
+Bank.new.run_transactions
+Hacker.new.hack
 
-binding.pry
-puts ap Car.all
+# Build a simple bank
+## Restrictions: The bank has a shitty server that can only store up to 3 variables. You can't nest classes within Bank, but have as many in the models folder as you like. However, the Hacker has access to the models folder too.
+
+## Step 1
+
+### The bank can put money into a users account
+
+## 2: A Hacker appears and calls User.all
+### Protect the user interface
+
+## Step 3
+
+### The bank can take money out of a users account
+### The users account cannot go below 0, unless overdraft is set
+
+## Step 4
+
+### Store a Transaction History
+
+## 5: A hacker appears
+### Encrypt the database
+# https://github.com/mdp/gibberish
+
+
+
+

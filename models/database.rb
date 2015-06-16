@@ -44,6 +44,12 @@ module Persistence
   end
 
   module InstanceMethods
+
+    def initialize(args = {})
+      args.each { |k,v| instance_variable_set("@#{k}", v) }
+    end
+
+
     def save
       DB.store(self.class.name, self.to_hash)
     end
