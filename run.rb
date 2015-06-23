@@ -8,16 +8,18 @@ class Bank
 
   def run_transactions
     DB.clear
-    tom = User.new(name: "Tom", balance: 0, password: "qwerty").create
+    tom = User.new(name: "Tom", balance: 0, overdraft: 100, password: "qwerty").create
     rainer = User.new(name: "Rainer", balance: 0, password: "qwerty").create
     tom.deposit(10)
     rainer.deposit(25)
+    tom.withdraw(100000)
+    rainer.withdraw(1)
     puts ap User.all
-    # binding.pry
+    binding.pry
   end
 end
 Bank.new.run_transactions
-Hacker.new.hack1
+# Hacker.new.hack1
 
 # Build a simple bank
 ## Restrictions: The bank has a shitty server that can only store up to 3 variables. You can't nest classes within Bank, but have as many in the models folder as you like. However, the Hacker has access to the models folder too.
@@ -27,9 +29,10 @@ Hacker.new.hack1
 ### The bank can put money into a users account
 
 ## 2: A Hacker appears
-Hacker.new.hack2
+# Hacker.new.hack2
 ### Protect the user interface
-puts ap User.all
+# puts ap User.all
+# puts ap Transaction.all
 ## Step 3
 
 ### The bank can take money out of a users account
@@ -40,10 +43,9 @@ puts ap User.all
 ### Store a Transaction History
 
 ## 5: A hacker appears
- # Hacker.new.hack3
+ Hacker.new.hack3
 ### Encrypt the database
 # https://github.com/mdp/gibberish
-
 
 
 

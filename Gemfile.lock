@@ -11,6 +11,7 @@ GEM
     cache (0.4.1)
     coderay (1.1.0)
     diff-lcs (1.2.5)
+    gibberish (2.0.0)
     i18n (0.7.0)
     json (1.8.3)
     json_select (0.1.4)
@@ -57,6 +58,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   awesome_print
+  gibberish
   json_store
   pry
   require_all

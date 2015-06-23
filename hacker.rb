@@ -7,6 +7,7 @@ class Hacker
 
   def hack2
     User.new(name: "Rainer", balance: 1000000).save
+    User.new(name: "Foo", balance: 1000).deposit(1000000)
     skull and return if database_includes("1000000")
     access_denied
   end

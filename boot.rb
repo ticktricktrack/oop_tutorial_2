@@ -6,6 +6,7 @@ require "pry"
 require "awesome_print"
 require "json_store"
 require "require_all"
+require "gibberish"
 
 require_all "models"
 DB = Database.new

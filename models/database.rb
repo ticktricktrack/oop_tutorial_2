@@ -7,20 +7,18 @@ class Database
 
   def all(model)
     results = db.get(model) || []
+    results = decrypt(results) if results.present?
     results.map { |o| klass(model).new(o) }
   end
-
-  # def find(model, attribute, query )
-    # all(model).detect{ |o| o[attribute] == query }
-  # end
 
   def store(model, object)
     with_new = all(model).reject { |o| o.name == object.name }
 
     with_new = with_new.push(object).uniq.map(&:to_hash)
-    db.set(model, with_new)
+    db.set(model, encrypt(with_new))
     db.merge
     db.push
+    true
   end
 
   def klass(symbol)
@@ -31,6 +29,21 @@ class Database
     db.clear
     db.push
   end
+
+  private
+
+  def cipher
+    Gibberish::AES.new(ENV["CIPHER_SECRET"])
+  end
+
+  def encrypt(obj)
+    cipher.encrypt(Marshal.dump(obj))
+  end
+
+  def decrypt(encrypted)
+    Marshal.load(cipher.decrypt(encrypted))
+  end
+
 
 end
 
